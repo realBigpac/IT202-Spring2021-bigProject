@@ -4,12 +4,17 @@
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+      .screen {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <div class="mdc-tab-bar" role="tablist" data-mdc-auto-init="MDCTabBar">
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area">
-          <div class="mdc-tab-scroller__scroll-content">
+          <div class="mdc-tab-scroller__scroll-content nav">
             <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
                 <span class="mdc-tab__text-label">Home</span>
@@ -17,7 +22,7 @@
               <span class="mdc-tab-indicator mdc-tab-indicator--active">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
-              <span class="mdc-tab__ripple"></span>
+              <span class="mdc-tab__ripple" data-screen="Home"></span>
             </button>
             <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
@@ -26,7 +31,7 @@
               <span class="mdc-tab-indicator">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
-              <span class="mdc-tab__ripple"></span>
+              <span class="mdc-tab__ripple" data-screen="Form"></span>
             </button>
             <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
@@ -35,7 +40,7 @@
               <span class="mdc-tab-indicator">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
-              <span class="mdc-tab__ripple"></span>
+              <span class="mdc-tab__ripple" data-screen="Search"></span>
             </button>
             <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
@@ -44,31 +49,46 @@
               <span class="mdc-tab-indicator">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
-              <span class="mdc-tab__ripple"></span>
+              <span class="mdc-tab__ripple" data-screen="Stored_Data"></span>
             </button>
           </div>
         </div>
       </div>
     </div>
-    <div class="Home">
+    <div class="Home screen">
       <div class="mdc-card mdc-card--outlined" data-mdc-auto-init="MDCRipple">
         <p>Home</p>
       </div>
     </div>
-    <div class="Form">
+    <div class="Form screen">
       <div class="mdc-card mdc-card--outlined" data-mdc-auto-init="MDCRipple">
         <p>Form</p>
       </div>
     </div>
-    <div class="Search">
+    <div class="Search screen">
       <div class="mdc-card mdc-card--outlined" data-mdc-auto-init="MDCRipple">
         <p>Search</p>
       </div>
     </div>
-    <div class="Stored_Data">
+    <div class="Stored_Data screen">
       <div class="mdc-card mdc-card--outlined" data-mdc-auto-init="MDCRipple">
         <p>Stored Data</p>
       </div>
     </div>
+    <script>
+      window.mdc.autoInit();
+      document.querySelector(".Home").style.display = "block";
+      let navAnchors = document.querySelectorAll("div.nav button")
+      navAnchors.forEach( (anchor) => {
+        anchor.addEventListener("click", (event) => {
+          document.querySelectorAll(".screen").forEach( (screen) => {
+            screen.style.display = "none";
+          })
+          let screen = event.target.getAttribute("data-screen");
+          let targetScreen = document.querySelector("." + screen);
+          targetScreen.style.display = "block";
+        })
+      })
+    </script>
   </body>
 </html>
