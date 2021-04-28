@@ -92,6 +92,14 @@
           </div>
         </div>
         <label for="basic-switch">coin paprika</label>
+        <div class="mdc-switch" data-mdc-auto-init="MDCSwitch">
+          <div class="mdc-switch__track"></div>
+          <div class="mdc-switch__thumb-underlay">
+            <div class="mdc-switch__thumb"></div>
+            <input type="checkbox" id="basic-switch" class="mdc-switch__native-control mode" role="switch" aria-checked="false">
+          </div>
+        </div>
+        <label for="basic-switch">online/offline</label>
       </div>
       <button class="mdc-button mdc-button--raised search" data-mdc-auto-init="MDCRipple">
         <span class="mdc-button__label">Search</span>
@@ -166,16 +174,14 @@
                       document.querySelector(".cards").appendChild(clone);
                     }
                 } else {
-                  for (let list of json) {
                     let clone = document.querySelector(".example").cloneNode(true);
-                    clone.querySelector("#id").innerText = list.id;
-                    clone.querySelector("#symbol").innerText = list.symbol;
-                    clone.querySelector("#name").innerText = list.name;
+                    clone.querySelector("#id").innerText = item.id;
+                    clone.querySelector("#symbol").innerText = item.symbol;
+                    clone.querySelector("#name").innerText = item.name;
                     clone.style.display = "block";
                     clone.classList.add("card");
                     clone.classList.remove("example");
                     document.querySelector(".cards").appendChild(clone);
-                  }
                 }
               }
             })
@@ -210,16 +216,14 @@
                       document.querySelector(".cards").appendChild(clone);
                     }
                 } else {
-                  for (let coins of json) {
                     let clone = document.querySelector(".example").cloneNode(true);
-                    clone.querySelector("#id").innerText = coins.id;
-                    clone.querySelector("#symbol").innerText = coins.symbol;
-                    clone.querySelector("#name").innerText = coins.name;
+                    clone.querySelector("#id").innerText = item.id;
+                    clone.querySelector("#symbol").innerText = item.symbol;
+                    clone.querySelector("#name").innerText = item.name;
                     clone.style.display = "block";
                     clone.classList.add("card");
                     clone.classList.remove("example");
                     document.querySelector(".cards").appendChild(clone);
-                  }
                 }
               }
             })
