@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Crypto Tracker</title>
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -40,7 +41,7 @@
               <span class="mdc-tab-indicator">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
-              <span class="mdc-tab__ripple" data-screen="Search"></span>
+              <span class="mdc-tab__ripple" data-screen="Data"></span>
             </button>
             <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
@@ -57,17 +58,52 @@
     </div>
     <div class="Home screen">
       <div class="mdc-card mdc-card--outlined" data-mdc-auto-init="MDCRipple">
-        <p>Home</p>
+        <h>Welcome to Crypto Tracker!</h>
+        <p>This app is used to track what tickers are popular and show the areas where each ticker is most searched for</p>
       </div>
     </div>
     <div class="Form screen">
-      <div class="mdc-card mdc-card--outlined" data-mdc-auto-init="MDCRipple">
-        <p>Form</p>
+      <div class="mdc-form-field" id="params" data-mdc-auto-init="MDCFormField">
+        <label class="mdc-text-field mdc-text-field--filled" data-mdc-auto-init="MDCTextField">
+          <span class="mdc-text-field__ripple"></span>
+          <span class="mdc-floating-label" id="my-label-id">Enter a symbol</span>
+          <input class="mdc-text-field__input sym" type="text" aria-labelledby="my-label-id">
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <label class="mdc-text-field mdc-text-field--filled" data-mdc-auto-init="MDCTextField">
+          <span class="mdc-text-field__ripple"></span>
+          <span class="mdc-floating-label" id="my-label-id">Enter a name</span>
+          <input class="mdc-text-field__input name" type="text" aria-labelledby="my-label-id">
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <div class="mdc-switch" data-mdc-auto-init="MDCSwitch">
+          <div class="mdc-switch__track"></div>
+          <div class="mdc-switch__thumb-underlay">
+            <div class="mdc-switch__thumb"></div>
+            <input type="checkbox" id="basic-switch" class="mdc-switch__native-control coin-g" role="switch" aria-checked="false">
+          </div>
+        </div>
+        <label for="basic-switch">coin gecko</label>
+        <div class="mdc-switch" data-mdc-auto-init="MDCSwitch">
+          <div class="mdc-switch__track"></div>
+          <div class="mdc-switch__thumb-underlay">
+            <div class="mdc-switch__thumb"></div>
+            <input type="checkbox" id="basic-switch" class="mdc-switch__native-control coin-p" role="switch" aria-checked="false">
+          </div>
+        </div>
+        <label for="basic-switch">coin paprika</label>
       </div>
+      <button class="mdc-button mdc-button--raised search" data-mdc-auto-init="MDCRipple">
+        <span class="mdc-button__label">Search</span>
+      </button>
     </div>
-    <div class="Search screen">
-      <div class="mdc-card mdc-card--outlined" data-mdc-auto-init="MDCRipple">
-        <p>Search</p>
+    <div class="Data screen">
+      <div class="mdc-card mdc-card--outlined example" data-mdc-auto-init="MDCRipple">
+        <p id="id">id</p>
+        <p id="symbol">symbol</p>
+        <p id="name">name</p>
+      </div>
+      <div class="mdc-card mdc-card--outlined cards" data-mdc-auto-init="MDCRipple">
       </div>
     </div>
     <div class="Stored_Data screen">
@@ -89,6 +125,107 @@
           targetScreen.style.display = "block";
         })
       })
+
+      let endpoint1 = "https://api.coingecko.com/api/v3/coins/list";
+      let endpoint2 = "https://api.coinpaprika.com/v1/coins";
+      
+      document.querySelector(".search").addEventListener("click", (e) => {
+        document.querySelectorAll(".card").forEach ( (card) => { 
+          card.remove()
+        });
+        document.querySelector(".Form").style.display = "none"
+        document.querySelector(".Data").style.display = "block"
+        
+        if (document.querySelector(".coin-g").getAttribute("aria-checked") == "true") {
+          fetch (endpoint1)
+            .then ( (response) => { return response.json() })
+            .then ( (json) => {
+              for (let item of json) {
+                if (document.querySelector(".name").value != "") {
+                  let name = document.querySelector(".name").value;
+                    if (name == item.name) {
+                      let clone = document.querySelector(".example").cloneNode(true);
+                      clone.querySelector("#id").innerText = item.id;
+                      clone.querySelector("#symbol").innerText = item.symbol;
+                      clone.querySelector("#name").innerText = item.name;
+                      clone.style.display = "block";
+                      clone.classList.add("card");
+                      clone.classList.remove("example");
+                      document.querySelector(".cards").appendChild(clone);
+                    }
+                } else if (document.querySelector(".sym").value != "") {
+                  let sym = document.querySelector(".sym").value;
+                    if (sym == item.symbol) {
+                      let clone = document.querySelector(".example").cloneNode(true);
+                      clone.querySelector("#id").innerText = item.id;
+                      clone.querySelector("#symbol").innerText = item.symbol;
+                      clone.querySelector("#name").innerText = item.name;
+                      clone.style.display = "block";
+                      clone.classList.add("card");
+                      clone.classList.remove("example");
+                      document.querySelector(".cards").appendChild(clone);
+                    }
+                } else {
+                  for (let list of json) {
+                    let clone = document.querySelector(".example").cloneNode(true);
+                    clone.querySelector("#id").innerText = list.id;
+                    clone.querySelector("#symbol").innerText = list.symbol;
+                    clone.querySelector("#name").innerText = list.name;
+                    clone.style.display = "block";
+                    clone.classList.add("card");
+                    clone.classList.remove("example");
+                    document.querySelector(".cards").appendChild(clone);
+                  }
+                }
+              }
+            })
+        }
+        if (document.querySelector(".coin-p").getAttribute("aria-checked") == "true") {
+          fetch (endpoint2)
+            .then ( (response) => { return response.json() })
+            .then ( (json) => {
+              for (let item of json) {
+                if (document.querySelector(".name").value != "") {
+                  let name = document.querySelector(".name").value;
+                    if (name == item.name) {
+                      let clone = document.querySelector(".example").cloneNode(true);
+                      clone.querySelector("#id").innerText = item.id;
+                      clone.querySelector("#symbol").innerText = item.symbol;
+                      clone.querySelector("#name").innerText = item.name;
+                      clone.style.display = "block";
+                      clone.classList.add("card");
+                      clone.classList.remove("example");
+                      document.querySelector(".cards").appendChild(clone);
+                    }
+                } else if (document.querySelector(".sym").value != "") {
+                  let sym = document.querySelector(".sym").value;
+                    if (sym == item.symbol) {
+                      let clone = document.querySelector(".example").cloneNode(true);
+                      clone.querySelector("#id").innerText = item.id;
+                      clone.querySelector("#symbol").innerText = item.symbol;
+                      clone.querySelector("#name").innerText = item.name;
+                      clone.style.display = "block";
+                      clone.classList.add("card");
+                      clone.classList.remove("example");
+                      document.querySelector(".cards").appendChild(clone);
+                    }
+                } else {
+                  for (let coins of json) {
+                    let clone = document.querySelector(".example").cloneNode(true);
+                    clone.querySelector("#id").innerText = coins.id;
+                    clone.querySelector("#symbol").innerText = coins.symbol;
+                    clone.querySelector("#name").innerText = coins.name;
+                    clone.style.display = "block";
+                    clone.classList.add("card");
+                    clone.classList.remove("example");
+                    document.querySelector(".cards").appendChild(clone);
+                  }
+                }
+              }
+            })
+        }
+      });
+      document.querySelector(".coin-g").getAttribute("aria-checked")
     </script>
   </body>
 </html>
