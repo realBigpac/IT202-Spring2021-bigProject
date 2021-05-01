@@ -6,11 +6,32 @@
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <style>
+      #map {
+        height: 400px;
+        width: 400px;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
       .screen {
         display: none;
       }
     </style>
+    <script>
+      let map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 41.872, lng: -87.648 },
+          zoom: 8,
+        });
+      }
+    </script>
   </head>
   <body>
     <div class="mdc-tab-bar" role="tablist" data-mdc-auto-init="MDCTabBar">
@@ -116,10 +137,14 @@
       </div>
     </div>
     <div class="Stored_Data screen">
-      <div class="mdc-card mdc-card--outlined" data-mdc-auto-init="MDCRipple">
-        <p>Stored Data</p>
+      <div class="mdc-card mdc-card--outlined data" data-mdc-auto-init="MDCRipple">
+        <div id="map"></div>
       </div>
     </div>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9jYMy_DHqPr3MxqDz78C7-rVhN4WZACI&callback=initMap&libraries=&v=weekly"
+        async
+      ></script>
     <script>
       window.mdc.autoInit();
 
