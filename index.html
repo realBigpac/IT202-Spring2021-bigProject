@@ -5,6 +5,7 @@
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
     <style>
       .screen {
         display: none;
@@ -121,6 +122,29 @@
     </div>
     <script>
       window.mdc.autoInit();
+
+      let endpoint1 = "https://api.coingecko.com/api/v3/coins/list";
+      let endpoint2 = "https://api.coinpaprika.com/v1/coins";
+      
+      var db = new Dexie("Crypto Info");
+      db.version(1).stores({ 
+        cryptos: 'name,symbol,id,database'
+      });
+
+      fetch (endpoint1)
+        .then ( (response) => { return response.json() })
+        .then ( (json) => {
+          for (let item of json) {
+            db.cryptos.add( {name: item.name, symbol: item.symbol, id: item.id, database: "coin_g"} )
+          }
+      });
+      fetch (endpoint2)
+        .then ( (response) => { return response.json() })
+        .then ( (json) => {
+          for (let item of json) {
+            db.cryptos.add( {name: item.name, symbol: item.symbol, id: item.id, database: "coin_p"}  )
+          }
+      });
       document.querySelector(".Home").style.display = "block";
       let navAnchors = document.querySelectorAll("div.nav button")
       navAnchors.forEach( (anchor) => {
@@ -133,9 +157,6 @@
           targetScreen.style.display = "block";
         })
       })
-
-      let endpoint1 = "https://api.coingecko.com/api/v3/coins/list";
-      let endpoint2 = "https://api.coinpaprika.com/v1/coins";
       
       document.querySelector(".search").addEventListener("click", (e) => {
         document.querySelectorAll(".card").forEach ( (card) => { 
@@ -145,88 +166,76 @@
         document.querySelector(".Data").style.display = "block"
         
         if (document.querySelector(".coin-g").getAttribute("aria-checked") == "true") {
-          fetch (endpoint1)
-            .then ( (response) => { return response.json() })
-            .then ( (json) => {
-              for (let item of json) {
-                if (document.querySelector(".name").value != "") {
-                  let name = document.querySelector(".name").value;
-                    if (name == item.name) {
-                      let clone = document.querySelector(".example").cloneNode(true);
-                      clone.querySelector("#id").innerText = item.id;
-                      clone.querySelector("#symbol").innerText = item.symbol;
-                      clone.querySelector("#name").innerText = item.name;
-                      clone.style.display = "block";
-                      clone.classList.add("card");
-                      clone.classList.remove("example");
-                      document.querySelector(".cards").appendChild(clone);
-                    }
-                } else if (document.querySelector(".sym").value != "") {
-                  let sym = document.querySelector(".sym").value;
-                    if (sym == item.symbol) {
-                      let clone = document.querySelector(".example").cloneNode(true);
-                      clone.querySelector("#id").innerText = item.id;
-                      clone.querySelector("#symbol").innerText = item.symbol;
-                      clone.querySelector("#name").innerText = item.name;
-                      clone.style.display = "block";
-                      clone.classList.add("card");
-                      clone.classList.remove("example");
-                      document.querySelector(".cards").appendChild(clone);
-                    }
-                } else {
-                    let clone = document.querySelector(".example").cloneNode(true);
-                    clone.querySelector("#id").innerText = item.id;
-                    clone.querySelector("#symbol").innerText = item.symbol;
-                    clone.querySelector("#name").innerText = item.name;
-                    clone.style.display = "block";
-                    clone.classList.add("card");
-                    clone.classList.remove("example");
-                    document.querySelector(".cards").appendChild(clone);
-                }
-              }
-            })
+          if (document.querySelector(".name").value != "") {
+            let name = document.querySelector(".name").value;
+            if (name == item.name) {
+              let clone = document.querySelector(".example").cloneNode(true);
+              clone.querySelector("#id").innerText = item.id;
+              clone.querySelector("#symbol").innerText = item.symbol;
+              clone.querySelector("#name").innerText = item.name;
+              clone.style.display = "block";
+              clone.classList.add("card");
+              clone.classList.remove("example");
+              document.querySelector(".cards").appendChild(clone);
+            }
+          } else if (document.querySelector(".sym").value != "") {
+            let sym = document.querySelector(".sym").value;
+            if (sym == item.symbol) {
+              let clone = document.querySelector(".example").cloneNode(true);
+              clone.querySelector("#id").innerText = item.id;
+              clone.querySelector("#symbol").innerText = item.symbol;
+              clone.querySelector("#name").innerText = item.name;
+              clone.style.display = "block";
+              clone.classList.add("card");
+              clone.classList.remove("example");
+              document.querySelector(".cards").appendChild(clone);
+            }
+          } else {
+            let clone = document.querySelector(".example").cloneNode(true);
+            clone.querySelector("#id").innerText = item.id;
+            clone.querySelector("#symbol").innerText = item.symbol;
+            clone.querySelector("#name").innerText = item.name;
+            clone.style.display = "block";
+            clone.classList.add("card");
+            clone.classList.remove("example");
+            document.querySelector(".cards").appendChild(clone);
+          }
         }
         if (document.querySelector(".coin-p").getAttribute("aria-checked") == "true") {
-          fetch (endpoint2)
-            .then ( (response) => { return response.json() })
-            .then ( (json) => {
-              for (let item of json) {
-                if (document.querySelector(".name").value != "") {
-                  let name = document.querySelector(".name").value;
-                    if (name == item.name) {
-                      let clone = document.querySelector(".example").cloneNode(true);
-                      clone.querySelector("#id").innerText = item.id;
-                      clone.querySelector("#symbol").innerText = item.symbol;
-                      clone.querySelector("#name").innerText = item.name;
-                      clone.style.display = "block";
-                      clone.classList.add("card");
-                      clone.classList.remove("example");
-                      document.querySelector(".cards").appendChild(clone);
-                    }
-                } else if (document.querySelector(".sym").value != "") {
-                  let sym = document.querySelector(".sym").value;
-                    if (sym == item.symbol) {
-                      let clone = document.querySelector(".example").cloneNode(true);
-                      clone.querySelector("#id").innerText = item.id;
-                      clone.querySelector("#symbol").innerText = item.symbol;
-                      clone.querySelector("#name").innerText = item.name;
-                      clone.style.display = "block";
-                      clone.classList.add("card");
-                      clone.classList.remove("example");
-                      document.querySelector(".cards").appendChild(clone);
-                    }
-                } else {
-                    let clone = document.querySelector(".example").cloneNode(true);
-                    clone.querySelector("#id").innerText = item.id;
-                    clone.querySelector("#symbol").innerText = item.symbol;
-                    clone.querySelector("#name").innerText = item.name;
-                    clone.style.display = "block";
-                    clone.classList.add("card");
-                    clone.classList.remove("example");
-                    document.querySelector(".cards").appendChild(clone);
-                }
-              }
-            })
+          if (document.querySelector(".name").value != "") {
+            let name = document.querySelector(".name").value;
+            if (name == item.name) {
+              let clone = document.querySelector(".example").cloneNode(true);
+              clone.querySelector("#id").innerText = item.id;
+              clone.querySelector("#symbol").innerText = item.symbol;
+              clone.querySelector("#name").innerText = item.name;
+              clone.style.display = "block";
+              clone.classList.add("card");
+              clone.classList.remove("example");
+              document.querySelector(".cards").appendChild(clone);
+            }
+          } else if (document.querySelector(".sym").value != "") {
+            let sym = document.querySelector(".sym").value;
+            if (sym == item.symbol) {
+              let clone = document.querySelector(".example").cloneNode(true);
+              clone.querySelector("#id").innerText = item.id;
+              clone.querySelector("#symbol").innerText = item.symbol;
+              clone.querySelector("#name").innerText = item.name;
+              clone.style.display = "block";
+              clone.classList.add("card");
+              clone.classList.remove("example");
+              document.querySelector(".cards").appendChild(clone);
+            }
+          } else {
+            let clone = document.querySelector(".example").cloneNode(true);
+            clone.querySelector("#id").innerText = item.id;
+            clone.querySelector("#symbol").innerText = item.symbol;
+            clone.querySelector("#name").innerText = item.name;
+            clone.style.display = "block";
+            clone.classList.add("card");
+            clone.classList.remove("example");
+            document.querySelector(".cards").appendChild(clone);
+          }
         }
       });
       document.querySelector(".coin-g").getAttribute("aria-checked")
