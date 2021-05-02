@@ -3,7 +3,7 @@
     "background_color": "#1215d1",
     "display": "standalone",
     "scope": "/",
-    "start_url": "/",
+    "start_url": "https://realbigpac.github.io/IT202-Spring2021-bigProject/",
     "app_name": "Crypto Tracker",
     "short_name": "Crypto Track",
     "description": "Search various cryptocurrency databases and displays popular searches",
