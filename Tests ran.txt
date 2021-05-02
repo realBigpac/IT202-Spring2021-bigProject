@@ -1,1 +1,10 @@
 During the course of creating this app I ran into a variety of problems and also had some suggestions made to improve my app by my friends
+
+Crypto users like to stay completely anonymous -- the fix to this is to give an online/offline option so that the location where the user searched from is not displayed on the map
+
+It is hard to tell whether you're still in the form tab or if you're in the search tab -- fixed the tabs so that the current tab is properly displayed
+
+Why is there a card that says what is on the results in search -- fixed the example card showing at all times in the search tab
+
+The website is very bland -- work on the display of the website will continually be done as it is used
+
