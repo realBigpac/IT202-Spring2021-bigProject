@@ -21,6 +21,9 @@
       .screen {
         display: none;
       }
+      .example {
+        display: none;
+      }
     </style>
     <script>
       let map;
@@ -46,38 +49,38 @@
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area">
           <div class="mdc-tab-scroller__scroll-content nav">
-            <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+            <button class="mdc-tab mdc-tab--active one" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
                 <span class="mdc-tab__text-label">Home</span>
               </span>
-              <span class="mdc-tab-indicator mdc-tab-indicator--active">
+              <span class="mdc-tab-indicator mdc-tab-indicator--active ione">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
               <span class="mdc-tab__ripple" data-screen="Home"></span>
             </button>
-            <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
+            <button class="mdc-tab two" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
                 <span class="mdc-tab__text-label">Form</span>
               </span>
-              <span class="mdc-tab-indicator">
+              <span class="mdc-tab-indicator itwo">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
               <span class="mdc-tab__ripple" data-screen="Form"></span>
             </button>
-            <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
+            <button class="mdc-tab three" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
                 <span class="mdc-tab__text-label">Search</span>
               </span>
-              <span class="mdc-tab-indicator">
+              <span class="mdc-tab-indicator ithree">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
               <span class="mdc-tab__ripple" data-screen="Data"></span>
             </button>
-            <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0">
+            <button class="mdc-tab four" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
                 <span class="mdc-tab__text-label">Stored Data</span>
               </span>
-              <span class="mdc-tab-indicator">
+              <span class="mdc-tab-indicator ifour">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
               <span class="mdc-tab__ripple" data-screen="Stored_Data"></span>
@@ -213,6 +216,10 @@
         });
         document.querySelector(".Form").style.display = "none"
         document.querySelector(".Data").style.display = "block"
+        document.querySelector(".two").classList.remove("mdc-tab--active");
+        document.querySelector(".itwo").classList.remove("mdc-tab-indicator--active");
+        document.querySelector(".three").classList.add("mdc-tab--active");
+        document.querySelector(".ithree").classList.add("mdc-tab-indicator--active");
         navigator.geolocation.getCurrentPosition(success, error);
         db.cryptos.where("database").equals("coin_g").each(function (item) {
           if (document.querySelector(".name").value != "") {
