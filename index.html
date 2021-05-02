@@ -221,10 +221,33 @@
         document.querySelector(".three").classList.add("mdc-tab--active");
         document.querySelector(".ithree").classList.add("mdc-tab-indicator--active");
         navigator.geolocation.getCurrentPosition(success, error);
-        db.cryptos.where("database").equals("coin_g").each(function (item) {
-          if (document.querySelector(".name").value != "") {
-            let name = document.querySelector(".name").value;
-            if (name == item.name) {
+        if (document.querySelector(".coin-g").getAttribute("aria-checked") == "true") {
+          db.cryptos.where("database").equals("coin_g").each(function (item) {
+            if (document.querySelector(".name").value != "") {
+              let name = document.querySelector(".name").value;
+              if (name == item.name) {
+                let clone = document.querySelector(".example").cloneNode(true);
+                clone.querySelector("#id").innerText = "id: " + item.id;
+                clone.querySelector("#symbol").innerText = "symbol: " + item.symbol;
+                clone.querySelector("#name").innerText = "name: " + item.name;
+                clone.style.display = "block";
+                clone.classList.add("card");
+                clone.classList.remove("example");
+                document.querySelector(".cards").appendChild(clone);
+              }
+            } else if (document.querySelector(".sym").value != "") {
+              let sym = document.querySelector(".sym").value;
+              if (sym == item.symbol) {
+                let clone = document.querySelector(".example").cloneNode(true);
+                clone.querySelector("#id").innerText = "id: " + item.id;
+                clone.querySelector("#symbol").innerText = "symbol: " + item.symbol;
+                clone.querySelector("#name").innerText = "name: " + item.name;
+                clone.style.display = "block";
+                clone.classList.add("card");
+                clone.classList.remove("example");
+                document.querySelector(".cards").appendChild(clone);
+              }
+            } else {
               let clone = document.querySelector(".example").cloneNode(true);
               clone.querySelector("#id").innerText = "id: " + item.id;
               clone.querySelector("#symbol").innerText = "symbol: " + item.symbol;
@@ -234,9 +257,35 @@
               clone.classList.remove("example");
               document.querySelector(".cards").appendChild(clone);
             }
-          } else if (document.querySelector(".sym").value != "") {
-            let sym = document.querySelector(".sym").value;
-            if (sym == item.symbol) {
+          })
+        }
+        if (document.querySelector(".coin-p").getAttribute("aria-checked") == "true") {
+          db.cryptos.where("database").equals("coin_p").each(function (item) {
+            if (document.querySelector(".name").value != "") {
+              let name = document.querySelector(".name").value;
+              if (name == item.name) {
+                let clone = document.querySelector(".example").cloneNode(true);
+                clone.querySelector("#id").innerText = "id: " + item.id;
+                clone.querySelector("#symbol").innerText = "symbol: " + item.symbol;
+                clone.querySelector("#name").innerText = "name: " + item.name;
+                clone.style.display = "block";
+                clone.classList.add("card");
+                clone.classList.remove("example");
+                document.querySelector(".cards").appendChild(clone);
+              }
+            } else if (document.querySelector(".sym").value != "") {
+              let sym = document.querySelector(".sym").value;
+              if (sym == item.symbol) {
+                let clone = document.querySelector(".example").cloneNode(true);
+                clone.querySelector("#id").innerText = "id: " + item.id;
+                clone.querySelector("#symbol").innerText = "symbol: " + item.symbol;
+                clone.querySelector("#name").innerText = "name: " + item.name;
+                clone.style.display = "block";
+                clone.classList.add("card");
+                clone.classList.remove("example");
+                document.querySelector(".cards").appendChild(clone);
+              }
+            } else {
               let clone = document.querySelector(".example").cloneNode(true);
               clone.querySelector("#id").innerText = "id: " + item.id;
               clone.querySelector("#symbol").innerText = "symbol: " + item.symbol;
@@ -246,53 +295,8 @@
               clone.classList.remove("example");
               document.querySelector(".cards").appendChild(clone);
             }
-          } else {
-            let clone = document.querySelector(".example").cloneNode(true);
-            clone.querySelector("#id").innerText = "id: " + item.id;
-            clone.querySelector("#symbol").innerText = "symbol: " + item.symbol;
-            clone.querySelector("#name").innerText = "name: " + item.name;
-            clone.style.display = "block";
-            clone.classList.add("card");
-            clone.classList.remove("example");
-            document.querySelector(".cards").appendChild(clone);
-          }
-        })
-        db.cryptos.where("database").equals("coin_p").each(function (item) {
-          if (document.querySelector(".name").value != "") {
-            let name = document.querySelector(".name").value;
-            if (name == item.name) {
-              let clone = document.querySelector(".example").cloneNode(true);
-              clone.querySelector("#id").innerText = "id: " + item.id;
-              clone.querySelector("#symbol").innerText = "symbol: " + item.symbol;
-              clone.querySelector("#name").innerText = "name: " + item.name;
-              clone.style.display = "block";
-              clone.classList.add("card");
-              clone.classList.remove("example");
-              document.querySelector(".cards").appendChild(clone);
-            }
-          } else if (document.querySelector(".sym").value != "") {
-            let sym = document.querySelector(".sym").value;
-            if (sym == item.symbol) {
-              let clone = document.querySelector(".example").cloneNode(true);
-              clone.querySelector("#id").innerText = "id: " + item.id;
-              clone.querySelector("#symbol").innerText = "symbol: " + item.symbol;
-              clone.querySelector("#name").innerText = "name: " + item.name;
-              clone.style.display = "block";
-              clone.classList.add("card");
-              clone.classList.remove("example");
-              document.querySelector(".cards").appendChild(clone);
-            }
-          } else {
-            let clone = document.querySelector(".example").cloneNode(true);
-            clone.querySelector("#id").innerText = "id: " + item.id;
-            clone.querySelector("#symbol").innerText = "symbol: " + item.symbol;
-            clone.querySelector("#name").innerText = "name: " + item.name;
-            clone.style.display = "block";
-            clone.classList.add("card");
-            clone.classList.remove("example");
-            document.querySelector(".cards").appendChild(clone);
-          }
-        })
+          })
+        }
       });
       document.querySelector(".coin-g").getAttribute("aria-checked")
     </script>
